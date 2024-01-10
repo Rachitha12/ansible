@@ -1,0 +1,63 @@
+   visudo
+   cd
+   exit
+   ssh 172.31.7.95
+   ansible demo -m ping
+   ssh-keygen
+   cd .ssh
+   ls -a
+   cat id_rsa
+   ssh-copy-id ansible@172.31.7.95
+   cd
+   ssh 172.31.7.95
+   
+   //1.module commands
+
+   ansible demo -m ping
+   ansible demo -m command -a "pwd"
+   ansible demo -m command -a "ls -a"
+   ansible demo -m uptime
+   ansible demo -m command -a "uptime"
+
+   //2.httpd install using module commands
+
+   ansible demo -b -m yum -a "pkg=httpd state=present"
+   ansible demo -b -a "which httpd"
+   ansible demo -b -m shell -a "systemctl status httpd"
+   ansible demo -b -m service -a "name=httpd state=started"
+   ansible demo -b -a "which httpd"
+   ansible demo -b -m shell -a "systemctl status httpd"
+   ansible demo -b -m service -a "name=httpd state=stopped"
+   ansible demo -b -m yum  -a "pkg=httpd state=absent"
+   ansible demo -b -a "which httpd"
+  
+   //3.create,check and delete user
+
+   ansible demo -b -m user -a "name=rachitha state=present"
+   ansible demo -b -a "cat /etc/passwd"
+   ansible demo -b -m user -a "name=rachitha state=absent"
+   
+   //4.create,check and delete group
+  
+   ansible demo -b -m group -a "name=devops state=present"
+   ansible demo -b -a "cat /etc/group"
+   ansible demo -b -m group -a "name=devops state=absent"
+   
+   //5.create and delete directory with permission   
+
+   ansible demo -b -m file -a "path=/home/ansible/demo state=directory"
+   ansible demo -b -m file -a "path=/home/ansible/demo state=absent"
+   ansible demo -b -m file -a "path=/home/ansible/demo state=directory mode=0755"
+   ansible demo -b -m file -a "path=/home/ansible/demo state=absent mode=0755"
+   
+   //6.create and delete files with permission
+   
+   ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=touch"
+   ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=absent"
+   
+   ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=touch mode=0755"
+   ansible demo -b -m file -a "path=/home/ansible/jsp.txt state=absent mode=0755"
+   
+   // 7. copyfile from master to slave node:
+   touch sample.txt
+   ansible demo -b -m copy -a "src=/home/ansible/sample.txt dest=/home/ansible"
